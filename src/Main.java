@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main extends JFrame {
 
@@ -26,6 +28,7 @@ public class Main extends JFrame {
         comboBox1.addItem("LZ77");
         comboBox1.addItem("LZW");
         comboBox1.addItem("Huffman");
+        comboBox1.addItem("Vector Quantization");
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
@@ -38,7 +41,9 @@ public class Main extends JFrame {
                 }
                 else if(comboBox1.getSelectedItem().equals("Huffman")){
                     algorithm = new Huffman();
-                }else{
+                }else if(comboBox1.getSelectedItem().equals("Vector Quantization")){
+                    algorithm = new VectorQuantization();
+                } else{
                     algorithm = null;
                 }
             }

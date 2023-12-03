@@ -3,10 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Decompress extends JFrame {
@@ -63,6 +60,8 @@ public class Decompress extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JFileChooser fc = new JFileChooser();
+                fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+
                 fc.showOpenDialog(DecompressPanel);
                 file = fc.getSelectedFile().getAbsolutePath();
                 file_name.setText(file);

@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add data">
-      <change afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
+    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add VectorQuantization">
+      <change afterPath="$PROJECT_DIR$/img1.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compress.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Decompress.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImageHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/VectorQuantization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,17 +28,23 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2Xo5ErT1wdXk7Jw3OYkglzSxKOc" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -76,7 +83,8 @@
       <workItem from="1701123476959" duration="4861000" />
       <workItem from="1701128723621" duration="150000" />
       <workItem from="1701128889564" duration="1334000" />
-      <workItem from="1701617601867" duration="1436000" />
+      <workItem from="1701617601867" duration="6601000" />
+      <workItem from="1701626078647" duration="1126000" />
     </task>
     <task id="LOCAL-00001" summary="remove extra print">
       <option name="closed" value="true" />
@@ -118,18 +126,28 @@
       <option name="project" value="LOCAL" />
       <updated>1701128993112</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Add VectorQuantization">
+      <option name="closed" value="true" />
+      <created>1701619069741</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1701619069741</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="remove extra print" />
     <MESSAGE value="done compression" />
     <MESSAGE value="add binary and GUI" />
     <MESSAGE value="Add data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add data" />
+    <MESSAGE value="Add VectorQuantization" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add VectorQuantization" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -142,6 +160,11 @@
           <url>file://$PROJECT_DIR$/src/LZW.java</url>
           <line>46</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
