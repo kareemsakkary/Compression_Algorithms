@@ -14,35 +14,42 @@ public class Main extends JFrame {
 
     private Algorithm algorithm;
     public Main(){
-        super("LZW-Algorithm Application");
+        super("Compressor-Algorithms Application");
         setContentPane(MainPanel);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setIconImage(new ImageIcon("D:\\Java-IntelliJ\\LZW_GUI\\icon.png").getImage());
         setSize(550, 380);
         setLocationRelativeTo(null);
         setVisible(true);
-        comboBox1.addItem("LZ77-Algorithm");
-        comboBox1.addItem("LZW-Algorithm");
+        algorithm = null;
+        comboBox1.addItem("Choose an Algorithm");
+        comboBox1.addItem("LZ77");
+        comboBox1.addItem("LZW");
         comboBox1.addItem("Huffman");
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(comboBox1.getSelectedItem().equals("LZW-Algorithm")){
+                if(comboBox1.getSelectedItem().equals("LZW")){
                     algorithm = new LZW();
                 }
-                else if(comboBox1.getSelectedItem().equals("LZ77-Algorithm")){
+                else if(comboBox1.getSelectedItem().equals("LZ77")){
                     algorithm = new LZ77();
                 }
                 else if(comboBox1.getSelectedItem().equals("Huffman")){
                     algorithm = new Huffman();
+                }else{
+                    algorithm = null;
                 }
             }
         });
         compressButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(algorithm == null){
+                    JOptionPane.showMessageDialog(null, "Please choose an algorithm first", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 c = new Compress(algorithm);
                 setVisible(false);
             }
@@ -50,6 +57,10 @@ public class Main extends JFrame {
         decompressButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(algorithm == null){
+                    JOptionPane.showMessageDialog(null, "Please choose an algorithm first", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 d = new Decompress(algorithm);
                 setVisible(false);
             }

@@ -19,7 +19,7 @@
         <properties>
           <font name="Lucida Sans" size="18" style="1"/>
           <foreground color="-6771018"/>
-          <text value="Welcome to LZW Compresser and Decompresser"/>
+          <text value="Welcome to text Compressor and Decompressor"/>
           <verticalAlignment value="0"/>
           <verticalTextPosition value="0"/>
         </properties>
