@@ -19,8 +19,20 @@ public class Compress extends JFrame {
     public void compressFile() throws IOException {
         if(file == null)
             JOptionPane.showMessageDialog(null,"Please choose a file");
-        else
-            algorithm.compress(file,file.substring(0,file.length()-4) + "_" +algorithm.getAlgorithmName()+".txt");
+        else{
+            // ask user for the path to save the compressed file
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            fc.showSaveDialog(CompressPanel);
+            String path = fc.getSelectedFile().getAbsolutePath();
+            // compress the file
+            try {
+                algorithm.compress(file , path);
+                JOptionPane.showMessageDialog(null,"File compressed successfully");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null,"Error while compressing the file");
+            }
+        }
     }
 
     public Compress(Algorithm algorithm){

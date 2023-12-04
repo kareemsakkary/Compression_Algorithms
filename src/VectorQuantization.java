@@ -190,9 +190,32 @@ public class VectorQuantization implements Algorithm {
             pixelsList.add(temp);
         }
         ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , 10 , 10 , 1024);
+        ArrayList<ArrayList<Integer>> compressed = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
+        for(int i = 0 ; i < vectors.size() ; i++){
+            double minError = Integer.MAX_VALUE;
+            int minIndex = 0;
+            for(int j = 0 ; j < codebook.size() ; j++){
+                double error = calculateError(vectors.get(i) , codebook.get(j)); // calculate error between vector and codebook
+                if(error < minError){ // get the minimum error
+                    minError = error; // update minimum error
+                    minIndex = j; // update minimum index
+                }
+            }
+            compressed.add(codebook.get(minIndex).get(0)); // add the codebook vector to compressed list
+        }
+        int [][] compressedImage = new int[compressed.size()][compressed.get(0).size()];
+        for(int i = 0 ; i < compressed.size() ; i++){
+            for(int j = 0 ; j < compressed.get(0).size() ; j++){
+                compressedImage[i][j] = compressed.get(i).get(j);
+            }
+        }
+        imageHandler.writeImage(compressedImage , outputPath);
     }
+
     @Override
     public void decompress(String inputPath, String outputPath) throws IOException {
+
 
     }
 }
