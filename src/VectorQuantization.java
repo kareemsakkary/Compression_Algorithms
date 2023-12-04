@@ -307,6 +307,7 @@ public class VectorQuantization implements Algorithm {
             ArrayList<ArrayList<Integer>> temp = codebook.get(Integer.parseInt(line[i]));
             decompressed.add(temp);
         }
+
         bufferedReader.close();
         ArrayList<ArrayList<Integer>> pixels = new ArrayList<>();
         int width_vector = width / vectorWidth;

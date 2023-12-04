@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="added optimize function">
+    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="fixed compression&amp;decompression">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VectorQuantization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +80,7 @@
       <workItem from="1701128889564" duration="1334000" />
       <workItem from="1701617601867" duration="6601000" />
       <workItem from="1701626078647" duration="1126000" />
-      <workItem from="1701706439236" duration="3139000" />
+      <workItem from="1701706439236" duration="4160000" />
     </task>
     <task id="LOCAL-00001" summary="remove extra print">
       <option name="closed" value="true" />
@@ -136,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701708145840</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="fixed compression&amp;decompression">
+      <created>1701710140630</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701710140630</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +158,8 @@
     <MESSAGE value="Add data" />
     <MESSAGE value="Add VectorQuantization" />
     <MESSAGE value="added optimize function" />
-    <option name="LAST_COMMIT_MESSAGE" value="added optimize function" />
+    <MESSAGE value="fixed compression&amp;decompression" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed compression&amp;decompression" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
