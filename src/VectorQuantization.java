@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class VectorQuantization implements Algorithm {
@@ -204,18 +204,85 @@ public class VectorQuantization implements Algorithm {
             }
             compressed.add(codebook.get(minIndex).get(0)); // add the codebook vector to compressed list
         }
-        int [][] compressedImage = new int[compressed.size()][compressed.get(0).size()];
-        for(int i = 0 ; i < compressed.size() ; i++){
-            for(int j = 0 ; j < compressed.get(0).size() ; j++){
-                compressedImage[i][j] = compressed.get(i).get(j);
+        // write the codebook to file
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputPath));
+        bufferedWriter.write(codebook.size() + "\n");
+        bufferedWriter.write(vectorHeight + "\n");
+        bufferedWriter.write(vectorWidth + "\n");
+        bufferedWriter.write(compressed.size() + "\n");
+        bufferedWriter.write(pixels.length + "\n");
+        bufferedWriter.write(pixels[0].length + "\n");
+        for(int i = 0 ; i < codebook.size() ; i++){
+            for(int j = 0 ; j < codebook.get(0).size() ; j++){
+                for(int k = 0 ; k < codebook.get(0).get(0).size() ; k++){
+                    bufferedWriter.write(codebook.get(i).get(j).get(k) + " ");
+                }
+                bufferedWriter.write("\n");
             }
         }
-        imageHandler.writeImage(compressedImage , outputPath);
+        for(int i = 0 ; i < compressed.size() ; i++){
+            for(int j = 0 ; j < compressed.get(0).size() ; j++){
+                bufferedWriter.write(compressed.get(i).get(j) + " ");
+            }
+            bufferedWriter.write("\n");
+        }
+        bufferedWriter.close();
+
     }
 
     @Override
     public void decompress(String inputPath, String outputPath) throws IOException {
-
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(inputPath));
+        // first line
+        int codebookSize = Integer.parseInt(bufferedReader.readLine());
+        // second line
+        vectorHeight = Integer.parseInt(bufferedReader.readLine());
+        // third line
+        vectorWidth = Integer.parseInt(bufferedReader.readLine());
+        // fourth line
+        int compressedSize = Integer.parseInt(bufferedReader.readLine());
+        int height = Integer.parseInt(bufferedReader.readLine());
+        int width = Integer.parseInt(bufferedReader.readLine());
+        ArrayList<ArrayList<ArrayList<Integer>>> codebook = new ArrayList<>();
+        for(int i = 0 ; i < codebookSize ; i++){
+            ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
+            for(int j = 0 ; j < vectorHeight ; j++){
+                ArrayList<Integer> temp2 = new ArrayList<>();
+                String [] line = bufferedReader.readLine().split(" ");
+                for(int k = 0 ; k < vectorWidth ; k++){
+                    temp2.add(Integer.parseInt(line[k]));
+                }
+                temp.add(temp2);
+            }
+            codebook.add(temp);
+        }
+        ArrayList<ArrayList<Integer>> compressed = new ArrayList<>();
+        for(int i = 0 ; i < compressedSize ; i++){
+            ArrayList<Integer> temp = new ArrayList<>();
+            String [] line = bufferedReader.readLine().split(" ");
+            for(int j = 0 ; j < line.length ; j++){
+                temp.add(Integer.parseInt(line[j]));
+            }
+            compressed.add(temp);
+        }
+        bufferedReader.close();
+        ArrayList<ArrayList<ArrayList<Integer>>> decompressed = new ArrayList<>();
+        for(int i = 0 ; i < compressed.size() ; i++){
+            decompressed.add(codebook.get(compressed.get(i).get(0)));
+        }
+        ArrayList<ArrayList<Integer>> pixels = new ArrayList<>();
+        int num_width = width / vectorWidth;
+        int num_height = height / vectorHeight;
+        for(int i = 0 ; i < decompressed.size() ; i++){
+            for(int j = 0 ; j < num_width ; j++){
+                ArrayList<Integer> temp = new ArrayList<>();
+                for(int k = 0 ; k < decompressed.get(i).get(i).size() ; k++){
+                    temp.add(decompressed.get(i).get(j).get(k));
+                }
+                pixels.add(temp);
+            }
+        }
+        imageHandler.writeImage(pixels , outputPath);
 
     }
 }

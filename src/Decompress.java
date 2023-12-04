@@ -23,8 +23,20 @@ public class Decompress extends JFrame {
     public void decompressFile() throws IOException {
         if(file == null)
             JOptionPane.showMessageDialog(null,"Please choose a file");
-        else
-            algorithm.decompress(file,file.substring(0,file.length()-4) + "_plaintext"+".txt");
+        else{
+            // ask user for the path to save the compressed file
+            JFileChooser fc = new JFileChooser();
+            fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+            fc.showSaveDialog(DecompressPanel);
+            String path = fc.getSelectedFile().getAbsolutePath();
+            // compress the file
+            try {
+                algorithm.decompress(file , path);
+                JOptionPane.showMessageDialog(null,"File decompressed successfully");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null,"Error while decompressing the file");
+            }
+        }
     }
 
 

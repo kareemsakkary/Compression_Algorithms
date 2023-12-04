@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+
 public class ImageHandler {
     public static int[][] readImage(String path) throws IOException {
         BufferedImage img = ImageIO.read(new File(path));
@@ -16,13 +18,15 @@ public class ImageHandler {
         }
         return pixels;
     }
-    public static void writeImage(int[][] pixels , String path) throws IOException {
-        BufferedImage img = new BufferedImage(pixels.length , pixels[0].length , BufferedImage.TYPE_BYTE_GRAY);
-        for(int i = 0 ; i < pixels.length ; i++){
-            for(int j = 0 ; j < pixels[0].length ; j++){
-                img.setRGB(i , j , pixels[i][j]);
+    public static void writeImage(ArrayList<ArrayList<Integer>>pixels, String path) throws IOException {
+        BufferedImage img = new BufferedImage(pixels.size(), pixels.get(0).size(), BufferedImage.TYPE_BYTE_GRAY);
+        for(int i = 0 ; i < pixels.size() ; i++){
+            for(int j = 0 ; j < pixels.get(0).size() ; j++){
+                int gray = pixels.get(i).get(j);
+                int rgb = (gray << 16) | (gray << 8) | gray;
+                img.setRGB(i , j , rgb);
             }
         }
-        ImageIO.write(img , "jpg" , new File(path));
+        ImageIO.write(img, "jpg", new File(path));
     }
 }
