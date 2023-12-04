@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add VectorQuantization">
+    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="decompressed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compressed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/compressed.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compressed.bin" beforeDir="false" afterPath="$PROJECT_DIR$/compressed.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compressed.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/img2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Huffman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Huffman.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VectorQuantization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +25,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -50,7 +57,7 @@
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE&quot;: &quot;right&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;324&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;binary&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Kareem/IdeaProjects/Compression_Algorithms&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -67,6 +74,15 @@
       <recent name="" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="lZW_compression" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -82,6 +98,7 @@
       <workItem from="1701128889564" duration="1334000" />
       <workItem from="1701617601867" duration="6601000" />
       <workItem from="1701626078647" duration="1126000" />
+      <workItem from="1701710206591" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="remove extra print">
       <option name="closed" value="true" />
@@ -131,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701619069741</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="decompressed">
+      <option name="closed" value="true" />
+      <created>1701704906362</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701704906362</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,7 +169,8 @@
     <MESSAGE value="add binary and GUI" />
     <MESSAGE value="Add data" />
     <MESSAGE value="Add VectorQuantization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add VectorQuantization" />
+    <MESSAGE value="decompressed" />
+    <option name="LAST_COMMIT_MESSAGE" value="decompressed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -157,6 +183,36 @@
           <url>file://$PROJECT_DIR$/src/LZW.java</url>
           <line>46</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>225</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>227</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>276</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>297</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>311</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>316</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
