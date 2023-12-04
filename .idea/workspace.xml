@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add VectorQuantization">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compressed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/compressed.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img2.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/VectorQuantization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
-    </list>
+    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add VectorQuantization" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
