@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Compress extends JFrame {
 
@@ -27,7 +28,14 @@ public class Compress extends JFrame {
             String path = fc.getSelectedFile().getAbsolutePath();
             // compress the file
             try {
-                algorithm.compress(file , path);
+                HashMap<String,Integer> required = new HashMap<>();
+                if(algorithm.getRequiredData() != null){
+                    for(String s : algorithm.getRequiredData()){
+                        String input = JOptionPane.showInputDialog("Enter " + s);
+                        required.put(s,Integer.parseInt(input));
+                    }
+                }
+                algorithm.compress(file , path, required);
                 JOptionPane.showMessageDialog(null,"File compressed successfully");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null,"Error while compressing the file");

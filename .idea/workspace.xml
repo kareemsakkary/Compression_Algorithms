@@ -6,8 +6,16 @@
   <component name="ChangeListManager">
     <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Add VectorQuantization">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compressed.bin" beforeDir="false" afterPath="$PROJECT_DIR$/compressed.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/compressed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/compressed.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/img2.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img2.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img3.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/img3.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Algorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Algorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Decompress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Decompress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Huffman.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Huffman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LZ77.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LZ77.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LZW.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LZW.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VectorQuantization.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,6 +74,15 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="run" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="lZW_compression" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -131,7 +148,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701619069741</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="ahhhhhhhhh">
+      <option name="closed" value="true" />
+      <created>1701713268072</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701713268073</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,19 +169,40 @@
     <MESSAGE value="add binary and GUI" />
     <MESSAGE value="Add data" />
     <MESSAGE value="Add VectorQuantization" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add VectorQuantization" />
+    <MESSAGE value="ahhhhhhhhh" />
+    <option name="LAST_COMMIT_MESSAGE" value="ahhhhhhhhh" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.io.EOFException" package="java.io" />
           <option name="timeStamp" value="13" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/LZW.java</url>
           <line>46</line>
           <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>187</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/src/VectorQuantization.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="61" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

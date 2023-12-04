@@ -134,7 +134,12 @@ public class LZW implements Algorithm{
     }
 
     @Override
-    public void compress(String inputPath, String outputPath) {
+    public ArrayList<String> getRequiredData() {
+        return null;
+    }
+
+    @Override
+    public void compress(String inputPath, String outputPath, HashMap<String,Integer> required) {
         file = inputPath;
         if(readFile1()){
             ArrayList<Integer> data = compress();
@@ -151,7 +156,7 @@ public class LZW implements Algorithm{
     }
 
     @Override
-    public void decompress(String inputPath, String outputPath) {
+    public void decompress(String inputPath, String outputPath,HashMap<String,Integer> required) {
         file = inputPath;
         if(readFile2()){
             String data = decompress();

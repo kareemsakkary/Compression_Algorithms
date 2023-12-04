@@ -3,6 +3,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 public class VectorQuantization implements Algorithm {
     ArrayList<ArrayList<Integer>> pixels;
     int picWidth , picHeight;
@@ -98,6 +100,10 @@ public class VectorQuantization implements Algorithm {
     public ArrayList<ArrayList<ArrayList<Integer>>> optimize(ArrayList<ArrayList<ArrayList<Integer>>> codebook, ArrayList<ArrayList<ArrayList<Integer>>>vectors ,int[] groups){
         boolean flag = true;
         ArrayList<ArrayList<ArrayList<ArrayList<Integer>>>> newGroups = new ArrayList<>();
+        for(int i = 0 ; i < codebook.size() ; i++){
+            ArrayList<ArrayList<ArrayList<Integer>>> group = new ArrayList<>();
+            newGroups.add(group);
+        }
         while(flag){
             flag = false;
             for(int i = 0 ; i<vectors.size();i++){
@@ -120,8 +126,10 @@ public class VectorQuantization implements Algorithm {
             }
             // calculate the average of each group
             for(int i = 0 ; i<newGroups.size();i++){
-                ArrayList<ArrayList<Integer>> avg = calculateAvg(newGroups.get(i));
-                codebook.set(i , avg);
+                if(!newGroups.get(i).isEmpty()) {
+                    ArrayList<ArrayList<Integer>> avg = calculateAvg(newGroups.get(i));
+                    codebook.set(i , avg);
+                }
             }
         }
         return codebook;
@@ -229,7 +237,16 @@ public class VectorQuantization implements Algorithm {
     }
 
     @Override
-    public void compress(String inputPath, String outputPath) throws IOException {
+    public ArrayList<String> getRequiredData() {
+        ArrayList<String> required = new ArrayList<>();
+        required.add("vectorWidth");
+        required.add("vectorLength");
+        required.add("codebookSize");
+        return required;
+    }
+
+    @Override
+    public void compress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
         int [][] pixels = imageHandler.readImage(inputPath);
         ArrayList<ArrayList<Integer>> pixelsList = new ArrayList<>();
         for(int i = 0 ; i < pixels.length ; i++){
@@ -239,7 +256,7 @@ public class VectorQuantization implements Algorithm {
             }
             pixelsList.add(temp);
         }
-        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , 2 , 2 , 256);
+        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , required.get("vectorWidth") , required.get("vectorLength") , required.get("codebookSize"));
         ArrayList<Integer> compressed = new ArrayList<>();
         ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
         for(int i = 0 ; i < vectors.size() ; i++){
@@ -304,7 +321,7 @@ public class VectorQuantization implements Algorithm {
     }
 
     @Override
-    public void decompress(String inputPath, String outputPath) throws IOException {
+    public void decompress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
         String content = Files.readString(Path.of(inputPath));
         String data = "";
         for(int i = 0 ; i < content.length() ; i++){

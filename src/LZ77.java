@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class LZ77 implements Algorithm{
@@ -69,7 +70,12 @@ public class LZ77 implements Algorithm{
     }
 
     @Override
-    public void compress(String inputPath, String outputPath) throws IOException {
+    public ArrayList<String> getRequiredData() {
+        return null;
+    }
+
+    @Override
+    public void compress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputPath));
         BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath));
         StringBuilder input = new StringBuilder();
@@ -88,7 +94,7 @@ public class LZ77 implements Algorithm{
     }
 
     @Override
-    public void decompress(String inputPath, String outputPath) throws IOException {
+    public void decompress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("input_compressed.txt"));
         BufferedWriter writer = new BufferedWriter(new FileWriter("output_decompressed.txt"));
         List<Tag> tags = new ArrayList<>();

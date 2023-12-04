@@ -29,6 +29,12 @@ public class Huffman implements Algorithm{
     public String getAlgorithmName() {
         return "Huffman";
     }
+
+    @Override
+    public ArrayList<String> getRequiredData() {
+        return null;
+    }
+
     public static HashMap<Character,String> buildTable(HashMap<Character,Integer> freq){
         PriorityQueue<Node> pq = new PriorityQueue<>(freq.size() , new Comparator<Node>() {
             @Override
@@ -160,7 +166,7 @@ public class Huffman implements Algorithm{
     }
 
     @Override
-    public void compress(String inputPath, String outputPath) throws IOException, IOException {
+    public void compress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException, IOException {
         File file = new File(inputPath);
         String content = "";
         Scanner sc = new Scanner(file);
@@ -180,7 +186,7 @@ public class Huffman implements Algorithm{
     }
 
     @Override
-    public void decompress(String inputPath, String outputPath) throws IOException {
+    public void decompress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
         File file = new File(inputPath);
         String content = "";
         Scanner sc = new Scanner(file);

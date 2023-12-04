@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Decompress extends JFrame {
     private Main home;
@@ -31,7 +32,8 @@ public class Decompress extends JFrame {
             String path = fc.getSelectedFile().getAbsolutePath();
             // compress the file
             try {
-                algorithm.decompress(file , path);
+                HashMap<String,Integer> required = new HashMap<>();
+                algorithm.decompress(file , path,  required);
                 JOptionPane.showMessageDialog(null,"File decompressed successfully");
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(null,"Error while decompressing the file");
