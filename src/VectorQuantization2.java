@@ -57,22 +57,39 @@ public class VectorQuantization2 {
         return error; // return the error between the two small blocks
     }
     // get codebook
-    public ArrayList<ArrayList<Integer>> getCodebook(ArrayList<ArrayList<ArrayList<Integer>>> vectors , ArrayList<ArrayList<Integer>> avg){ // get the codebook
-        // avg is the average of the small blocks
-        // to get the codebook we need to get the small block with the minimum error between it and the average of the small blocks
-        ArrayList<ArrayList<Integer>> codebook = new ArrayList<>(); // the codebook
-        for(int i = 0 ; i < codebookSize ; i++){ // loop over the codebook size
+    public static ArrayList<ArrayList<ArrayList<Integer>>> getCodebook(ArrayList<ArrayList<ArrayList<Integer>>> vectors , ArrayList<ArrayList<Integer>> avg , int codebookSize){ // get the codebook
+        return null;
+    }
+    public static void compress(String path , int vectorWidth , int vectorHeight , int codebookSize) throws IOException {
+        VectorQuantization2 vq = new VectorQuantization2(path , vectorWidth , vectorHeight , codebookSize); // create a new VectorQuantization2 object
+        ArrayList<ArrayList<ArrayList<Integer>>> vectors = vq.getVectors(); // get the small blocks from the image
+        ArrayList<ArrayList<Integer>> avg = vq.calculateAvg(vectors); // calculate the average of the small blocks
+        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodebook(vectors , avg , codebookSize); // get the codebook
+        ArrayList<Integer> indexes = new ArrayList<>(); // the indexes of the small blocks in the codebook
+        for(int i = 0 ; i < vectors.size() ; i++){ // loop over the small blocks
             double minError = Double.MAX_VALUE; // the minimum error between the small block and the average of the small blocks
-            ArrayList<Integer> temp = new ArrayList<>(); // the small block
-            for(int j = 0 ; j < vectors.size() ; j++){ // loop over the small blocks
-                double error = calculateError(vectors.get(j) , avg); // calculate the error between the small block and the average of the small blocks
+            int index = 0; // the index of the small block in the codebook
+            for(int j = 0 ; j < codebook.size() ; j++){ // loop over the codebook
+                double error = vq.calculateError(vectors.get(i) , codebook.get(j)); // calculate the error between the small block and the average of the small blocks
                 if(error < minError){ // if the error is less than the minimum error
                     minError = error; // update the minimum error
-                    temp = vectors.get(j).get(0); // update the small block
+                    index = j; // update the index
                 }
             }
-            codebook.add(temp); // temp is the small block with the minimum error so add it to the codebook
+            indexes.add(index); // add the index to the indexes
         }
-        return codebook; // return the codebook
+        int[][] compressed = new int[vq.picHeight][vq.picWidth]; // the compressed image
+        int index = 0; // the index of the small block in the indexes
+        for(int i = 0 ; i < vq.picHeight ; i += vectorHeight){ // loop over the image height
+            for(int j = 0 ; j < vq.picWidth ; j += vectorWidth){ // loop over the image width
+                for(int k = i ; k < i + vectorHeight ; k++){ // loop over the small block height
+                    for(int l = j ; l < j + vectorWidth ; l++){ // loop over the small block width
+                        compressed[k][l] = codebook.get(indexes.get(index)).get(k - i).get(l - j); // add the pixel to the compressed image
+                    }
+                }
+                index++; // update the index
+            }
+        }
+        ImageHandler.writeImage(compressed , "compressed.jpg"); // write the compressed image
     }
 }

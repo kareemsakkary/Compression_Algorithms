@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="Added ImageHandler class">
-      <change afterPath="$PROJECT_DIR$/src/VectorQuantization2.java" afterDir="false" />
+    <list default="true" id="d4133752-532b-4099-94f3-076b1ed4e257" name="Changes" comment="added methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ImageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ImageHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/VectorQuantization2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VectorQuantization2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +82,7 @@
       <workItem from="1701128723621" duration="150000" />
       <workItem from="1701128889564" duration="1334000" />
       <workItem from="1701617601867" duration="1436000" />
-      <workItem from="1701619366705" duration="1425000" />
+      <workItem from="1701619366705" duration="4132000" />
     </task>
     <task id="LOCAL-00001" summary="remove extra print">
       <option name="closed" value="true" />
@@ -130,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1701619456718</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="added methods">
+      <created>1701620818520</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701620818520</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,7 +150,8 @@
     <MESSAGE value="add binary and GUI" />
     <MESSAGE value="Add data" />
     <MESSAGE value="Added ImageHandler class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added ImageHandler class" />
+    <MESSAGE value="added methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="added methods" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

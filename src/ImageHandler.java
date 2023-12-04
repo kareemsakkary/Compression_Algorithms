@@ -16,7 +16,13 @@ public class ImageHandler {
         BufferedImage img = new BufferedImage(pixels.length , pixels[0].length , BufferedImage.TYPE_INT_RGB);
         for(int i = 0 ; i < pixels.length ; i++){
             for(int j = 0 ; j < pixels[0].length ; j++){
-                img.setRGB(i , j , pixels[i][j]);
+                int a = 255;
+                int r = (pixels[i][j] >> 16) & 0xff;
+                int g = (pixels[i][j] >> 8) & 0xff;
+                int b = pixels[i][j] & 0xff;
+                int avg = (r + g + b) / 3;
+                int p = (a << 24) | (avg << 16) | (avg << 8) | avg;
+                img.setRGB(i , j , p);
             }
         }
         ImageIO.write(img , "jpg" , new File(path));
