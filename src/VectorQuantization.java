@@ -239,7 +239,7 @@ public class VectorQuantization implements Algorithm {
             pixelsList.add(temp);
         }
         ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , 2 , 2 , 256);
-        ArrayList<ArrayList<Integer>> compressed = new ArrayList<>();
+        ArrayList<Integer> compressed = new ArrayList<>();
         ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
         for(int i = 0 ; i < vectors.size() ; i++){
             double minError = Integer.MAX_VALUE;
@@ -251,7 +251,7 @@ public class VectorQuantization implements Algorithm {
                     minIndex = j; // update minimum index
                 }
             }
-            compressed.add(codebook.get(minIndex).get(0)); // add the codebook vector to compressed list
+            compressed.add(minIndex); // add the codebook vector to compressed list
         }
         // write the codebook to file
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputPath));
@@ -270,13 +270,9 @@ public class VectorQuantization implements Algorithm {
             }
         }
         for(int i = 0 ; i < compressed.size() ; i++){
-            for(int j = 0 ; j < compressed.get(0).size() ; j++){
-                bufferedWriter.write(compressed.get(i).get(j) + " ");
-            }
-            bufferedWriter.write("\n");
+            bufferedWriter.write(compressed.get(i) + " ");
         }
         bufferedWriter.close();
-
     }
 
     @Override
@@ -305,20 +301,13 @@ public class VectorQuantization implements Algorithm {
             }
             codebook.add(temp);
         }
-        ArrayList<ArrayList<Integer>> compressed = new ArrayList<>();
-        for(int i = 0 ; i < compressedSize ; i++){
-            ArrayList<Integer> temp = new ArrayList<>();
-            String [] line = bufferedReader.readLine().split(" ");
-            for(int j = 0 ; j < line.length ; j++){
-                temp.add(Integer.parseInt(line[j]));
-            }
-            compressed.add(temp);
+        ArrayList<ArrayList<ArrayList<Integer>>> decompressed = new ArrayList<>();
+        String [] line = bufferedReader.readLine().split(" ");
+        for(int i = 0 ; i < line.length ; i++){
+            ArrayList<ArrayList<Integer>> temp = codebook.get(Integer.parseInt(line[i]));
+            decompressed.add(temp);
         }
         bufferedReader.close();
-        ArrayList<ArrayList<ArrayList<Integer>>> decompressed = new ArrayList<>();
-        for(int i = 0 ; i < compressed.size() ; i++){
-            decompressed.add(codebook.get(compressed.get(i).get(0)));
-        }
         ArrayList<ArrayList<Integer>> pixels = new ArrayList<>();
         int width_vector = width / vectorWidth;
         int height_vector = height / vectorHeight;
@@ -329,7 +318,6 @@ public class VectorQuantization implements Algorithm {
             }
             pixels.add(temp);
         }
-
         imageHandler.writeImage(pixels , outputPath);
 
     }
