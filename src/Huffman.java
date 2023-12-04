@@ -175,7 +175,6 @@ public class Huffman implements Algorithm{
         for(int i = 0 ; i < encoded.length() ; i+=8){ // iterate over the encoded string
             curr += (char) stringToByte(encoded.substring(i , Math.min(i+8 , encoded.length()))); // add the byte to the string
         }
-
         Files.write(Paths.get(outputPath) , curr.getBytes());
     }
 
