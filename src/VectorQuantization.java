@@ -156,13 +156,22 @@ public class VectorQuantization implements Algorithm {
 
         return getCodesBookHelper(vectors,newCodebook);
     }
+    public int getGreatestDivisor(int num , int from){
+        for(int i = from ; i <= num ; i++){
+            if(num % i == 0){
+                return i;
+            }
+        }
+        return num;
+    }
     public ArrayList<ArrayList<ArrayList<Integer>>> getCodesBook(ArrayList<ArrayList<Integer>> pixels,int vectorWidth , int vectorHeight, int codebookSize){
         this.pixels = pixels;
         this.codebookSize = codebookSize;
         picHeight = pixels.size();
         picWidth = pixels.get(0).size();
-        this.vectorWidth = vectorWidth -  (picWidth % vectorWidth);
-        this.vectorHeight = vectorHeight - (picHeight % vectorHeight);
+
+        this.vectorWidth = getGreatestDivisor(picWidth , vectorWidth);
+        this.vectorHeight = getGreatestDivisor(picHeight , vectorHeight);
 
         ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors();
         ArrayList<ArrayList<Integer>> avg = calculateAvg(vectors);
@@ -189,7 +198,7 @@ public class VectorQuantization implements Algorithm {
             }
             pixelsList.add(temp);
         }
-        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , 10 , 10 , 1024);
+        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , 2 , 2 , 256);
         ArrayList<ArrayList<Integer>> compressed = new ArrayList<>();
         ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
         for(int i = 0 ; i < vectors.size() ; i++){
@@ -271,17 +280,16 @@ public class VectorQuantization implements Algorithm {
             decompressed.add(codebook.get(compressed.get(i).get(0)));
         }
         ArrayList<ArrayList<Integer>> pixels = new ArrayList<>();
-        int num_width = width / vectorWidth;
-        int num_height = height / vectorHeight;
-        for(int i = 0 ; i < decompressed.size() ; i++){
-            for(int j = 0 ; j < num_width ; j++){
-                ArrayList<Integer> temp = new ArrayList<>();
-                for(int k = 0 ; k < decompressed.get(i).get(i).size() ; k++){
-                    temp.add(decompressed.get(i).get(j).get(k));
-                }
-                pixels.add(temp);
+        int width_vector = width / vectorWidth;
+        int height_vector = height / vectorHeight;
+        for(int x = 0 ; x < height ; x++){
+            ArrayList<Integer> temp = new ArrayList<>();
+            for(int y = 0 ; y < width ; y++){
+                temp.add(decompressed.get((x / vectorHeight) * width_vector + (y / vectorWidth)).get(x % vectorHeight).get(y % vectorWidth));
             }
+            pixels.add(temp);
         }
+
         imageHandler.writeImage(pixels , outputPath);
 
     }
