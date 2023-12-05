@@ -22,13 +22,13 @@ public class ImageHandler {
         }
         return pixels;
     }
-    public static void writeImage(ArrayList<ArrayList<ArrayList<Integer>>>pixels, String path) throws IOException {
-        BufferedImage img = new BufferedImage(pixels.size(), pixels.get(0).size(), BufferedImage.TYPE_INT_RGB);
-        for(int i = 0 ; i < pixels.size() ; i++){
-            for(int j = 0 ; j < pixels.get(0).size() ; j++){
-                int r = pixels.get(i).get(j).get(0);
-                int g = pixels.get(i).get(j).get(1);
-                int b = pixels.get(i).get(j).get(2);
+    public static void writeImage(int[][][]pixels, String path) throws IOException {
+        BufferedImage img = new BufferedImage(pixels.length, pixels[0].length, BufferedImage.TYPE_INT_RGB);
+        for(int i = 0 ; i < pixels.length ; i++){
+            for(int j = 0 ; j < pixels[0].length ; j++){
+                int r = pixels[i][j][0];
+                int g = pixels[i][j][1];
+                int b = pixels[i][j][2];
                 int rgb = (r << 16) | (g << 8) | b;
                 img.setRGB(i , j , rgb);
             }
