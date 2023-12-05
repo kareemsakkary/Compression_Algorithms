@@ -4,26 +4,32 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ImageHandler {
-    public static int[][] readImage(String path) throws IOException {
+
+
+
+    public static int[][][] readImage(String path) throws IOException {
         BufferedImage img = ImageIO.read(new File(path));
-        int[][] pixels = new int[img.getWidth()][img.getHeight()];
+        int[][][] pixels = new int[img.getWidth()][img.getHeight()][3];
         for(int i = 0 ; i < img.getWidth() ; i++){
             for(int j = 0 ; j < img.getHeight() ; j++){
                 int r = (img.getRGB(i , j) >> 16) & 0xff;
                 int g = (img.getRGB(i , j) >> 8) & 0xff;
                 int b = img.getRGB(i , j) & 0xff;
-                int gray = (r + g + b) / 3;
-                pixels[i][j] = gray;
+                pixels[i][j][0] = r;
+                pixels[i][j][1] = g;
+                pixels[i][j][2] = b;
             }
         }
         return pixels;
     }
-    public static void writeImage(ArrayList<ArrayList<Integer>>pixels, String path) throws IOException {
-        BufferedImage img = new BufferedImage(pixels.size(), pixels.get(0).size(), BufferedImage.TYPE_BYTE_GRAY);
+    public static void writeImage(ArrayList<ArrayList<ArrayList<Integer>>>pixels, String path) throws IOException {
+        BufferedImage img = new BufferedImage(pixels.size(), pixels.get(0).size(), BufferedImage.TYPE_INT_RGB);
         for(int i = 0 ; i < pixels.size() ; i++){
             for(int j = 0 ; j < pixels.get(0).size() ; j++){
-                int gray = pixels.get(i).get(j);
-                int rgb = (gray << 16) | (gray << 8) | gray;
+                int r = pixels.get(i).get(j).get(0);
+                int g = pixels.get(i).get(j).get(1);
+                int b = pixels.get(i).get(j).get(2);
+                int rgb = (r << 16) | (g << 8) | b;
                 img.setRGB(i , j , rgb);
             }
         }
