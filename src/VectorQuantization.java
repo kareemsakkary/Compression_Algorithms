@@ -247,32 +247,35 @@ public class VectorQuantization implements Algorithm {
 
     @Override
     public void compress(String inputPath, String outputPath, HashMap<String,Integer> required) throws IOException {
-        int [][] pixels = imageHandler.readImage(inputPath);
-        ArrayList<ArrayList<Integer>> pixelsList = new ArrayList<>();
-        for(int i = 0 ; i < pixels.length ; i++){
-            ArrayList<Integer> temp = new ArrayList<>();
-            for(int j = 0 ; j < pixels[0].length ; j++){
-                temp.add(pixels[i][j]);
-            }
-            pixelsList.add(temp);
-        }
-        ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList , required.get("vectorWidth") , required.get("vectorLength") , required.get("codebookSize"));
-        ArrayList<Integer> compressed = new ArrayList<>();
-        ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
-        for(int i = 0 ; i < vectors.size() ; i++){
-            double minError = Integer.MAX_VALUE;
-            int minIndex = 0;
-            for(int j = 0 ; j < codebook.size() ; j++){
-                double error = calculateError(vectors.get(i) , codebook.get(j)); // calculate error between vector and codebook
-                if(error < minError){ // get the minimum error
-                    minError = error; // update minimum error
-                    minIndex = j; // update minimum index
+        int [][][] pixels = imageHandler.readImage(inputPath);
+        String curr = ""; // to store the encoded string
+
+        for(int col = 0; col < 3; col++) {
+            ArrayList<ArrayList<Integer>> pixelsList = new ArrayList<>();
+            for (int i = 0; i < pixels.length; i++) {
+                ArrayList<Integer> temp = new ArrayList<>();
+                for (int j = 0; j < pixels[0].length; j++) {
+                    temp.add(pixels[i][j][col]);
                 }
+                pixelsList.add(temp);
             }
-            compressed.add(minIndex); // add the codebook vector to compressed list
-        }
-        String data = "";
-        // write the codebook to file
+            ArrayList<ArrayList<ArrayList<Integer>>> codebook = getCodesBook(pixelsList, required.get("vectorWidth"), required.get("vectorLength"), required.get("codebookSize"));
+            ArrayList<Integer> compressed = new ArrayList<>();
+            ArrayList<ArrayList<ArrayList<Integer>>> vectors = getVectors(); // get vectors from image
+            for (int i = 0; i < vectors.size(); i++) {
+                double minError = Integer.MAX_VALUE;
+                int minIndex = 0;
+                for (int j = 0; j < codebook.size(); j++) {
+                    double error = calculateError(vectors.get(i), codebook.get(j)); // calculate error between vector and codebook
+                    if (error < minError) { // get the minimum error
+                        minError = error; // update minimum error
+                        minIndex = j; // update minimum index
+                    }
+                }
+                compressed.add(minIndex); // add the codebook vector to compressed list
+            }
+            String data = "";
+            // write the codebook to file
 //        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(outputPath));
 //        bufferedWriter.write(codebook.size() + "\n");
 //        bufferedWriter.write(vectorHeight + "\n");
@@ -281,41 +284,42 @@ public class VectorQuantization implements Algorithm {
 //        bufferedWriter.write(pixels.length + "\n");
 //        bufferedWriter.write(pixels[0].length + "\n");
 
-        data += shortToString((short)codebook.size());
-        data += shortToString((short)vectorHeight);
-        data += shortToString((short)vectorWidth);
-        data += shortToString((short)compressed.size());
-        data += shortToString((short)pixels.length);
-        data += shortToString((short)pixels[0].length);
+            data += shortToString((short) codebook.size());
+            data += shortToString((short) vectorHeight);
+            data += shortToString((short) vectorWidth);
+            data += shortToString((short) compressed.size());
+            data += shortToString((short) pixels.length);
+            data += shortToString((short) pixels[0].length);
 
-        for(int i = 0 ; i < codebook.size() ; i++){
-            for(int j = 0 ; j < codebook.get(0).size() ; j++){
-                for(int k = 0 ; k < codebook.get(0).get(0).size() ; k++){
+            for (int i = 0; i < codebook.size(); i++) {
+                for (int j = 0; j < codebook.get(0).size(); j++) {
+                    for (int k = 0; k < codebook.get(0).get(0).size(); k++) {
 //                    bufferedWriter.write(codebook.get(i).get(j).get(k) + " ");
-                    data += byteToString(codebook.get(i).get(j).get(k).byteValue());
-                }
+                        data += byteToString(codebook.get(i).get(j).get(k).byteValue());
+                    }
 //                bufferedWriter.write("\n");
+                }
             }
-        }
-        int bit_size =(int)(Math.log10(codebook.size()) / Math.log10(2));
+            int bit_size = (int) (Math.log10(codebook.size()) / Math.log10(2));
 
-        for(int i = 0 ; i < compressed.size() ; i++){
-            for(int j = 0 ; j < bit_size ; j++){
-                if((compressed.get(i) & (1 << (bit_size - j - 1))) != 0){
-                    data += '1';
+            for (int i = 0; i < compressed.size(); i++) {
+                for (int j = 0; j < bit_size; j++) {
+                    if ((compressed.get(i) & (1 << (bit_size - j - 1))) != 0) {
+                        data += '1';
+                    } else {
+                        data += '0';
+                    }
                 }
-                else{
-                    data += '0';
-                }
-            }
 //            bufferedWriter.write("\n");
+            }
+            char ign = (char) (8 - (data.length() % 8)); // the number of bits to be ignored , as the encoded string may not be a multiple of 8
+            curr += ign; // add the number of bits to be ignored to the beginning of the string, so that it can be retrieved later
+            for (int i = 0; i < data.length(); i += 8) { // iterate over the encoded string
+                curr += (char) stringToByte(data.substring(i, Math.min(i + 8, data.length()))); // add the byte to the string
+            }
         }
-        char ign =(char)(8 - (data.length() % 8)); // the number of bits to be ignored , as the encoded string may not be a multiple of 8
-        String curr = ""; // to store the encoded string
-        curr += ign; // add the number of bits to be ignored to the beginning of the string, so that it can be retrieved later
-        for(int i = 0 ; i < data.length() ; i+=8){ // iterate over the encoded string
-            curr += (char) stringToByte(data.substring(i , Math.min(i+8 , data.length()))); // add the byte to the string
-        }
+
+
         Files.write(Paths.get(outputPath) , curr.getBytes());
 //        bufferedWriter.close();
     }
@@ -327,60 +331,70 @@ public class VectorQuantization implements Algorithm {
         for(int i = 0 ; i < content.length() ; i++){
             data += byteToString((byte)content.charAt(i));
         }
-
-        int ign = (int)stringToByte(data.substring(0 , 8)); // get the number of bits to be ignored
-        // first line
-        int codebookSize = stringToShort(data.substring(8 , 24));
-        int vectorHeight = stringToShort(data.substring(24 , 40));
-        int vectorWidth = stringToShort(data.substring(40 , 56));
-        int compressedSize = stringToShort(data.substring(56 , 72));
-        int height = stringToShort(data.substring(72 , 88));
-        int width = stringToShort(data.substring(88 , 104));
+        int codebookSize = stringToShort(data.substring(8, 24));
+        int vectorHeight = stringToShort(data.substring(24, 40));
+        int vectorWidth = stringToShort(data.substring(40, 56));
+        int compressedSize = stringToShort(data.substring(56, 72));
+        int height = stringToShort(data.substring(72, 88));
+        int width = stringToShort(data.substring(88, 104));
         int start = 104;
-        ArrayList<ArrayList<ArrayList<Integer>>> codebook = new ArrayList<>();
-        for(int i = 0 ; i < codebookSize ; i++){
-            ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
-            for(int j = 0 ; j < vectorHeight ; j++){
-                ArrayList<Integer> temp2 = new ArrayList<>();
-                for(int k = 0 ; k < vectorWidth ; k++){
-                    temp2.add((int) stringToByte(data.substring(start , start + 8) )&0xff);
-                    start += 8;
+
+        int[][][] pixels = new int[height][width][3];
+
+        int nd = 0;
+        for(int col = 0; col < 3; col++) {
+            int ign = (int) stringToByte(data.substring(0, 8)); // get the number of bits to be ignored
+            // first line
+            codebookSize = stringToShort(data.substring(8, 24));
+            vectorHeight = stringToShort(data.substring(24, 40));
+            vectorWidth = stringToShort(data.substring(40, 56));
+            compressedSize = stringToShort(data.substring(56, 72));
+            height = stringToShort(data.substring(72, 88));
+            width = stringToShort(data.substring(88, 104));
+            start = nd + 104;
+            ArrayList<ArrayList<ArrayList<Integer>>> codebook = new ArrayList<>();
+            for (int i = 0; i < codebookSize; i++) {
+                ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
+                for (int j = 0; j < vectorHeight; j++) {
+                    ArrayList<Integer> temp2 = new ArrayList<>();
+                    for (int k = 0; k < vectorWidth; k++) {
+                        temp2.add((int) stringToByte(data.substring(start, start + 8)) & 0xff);
+                        start += 8;
+                    }
+                    temp.add(temp2);
                 }
-                temp.add(temp2);
+                codebook.add(temp);
             }
-            codebook.add(temp);
-        }
 
-        int bit_size =(int)(Math.log10(codebook.size()) / Math.log10(2));
-        ArrayList<Integer> compressed = new ArrayList<>();
-        for(int i = 0 ; i < compressedSize ; i++){
-            int num = 0;
-            for(int j = 0 ; j < bit_size ; j++){
-                if(data.charAt(start) == '1'){
-                    num |= (1 << (bit_size - j - 1));
+            int bit_size = (int) (Math.log10(codebook.size()) / Math.log10(2));
+            ArrayList<Integer> compressed = new ArrayList<>();
+            for (int i = 0; i < compressedSize; i++) {
+                int num = 0;
+                for (int j = 0; j < bit_size; j++) {
+                    if (data.charAt(start) == '1') {
+                        num |= (1 << (bit_size - j - 1));
+                    }
+                    start++;
                 }
-                start++;
+
+                compressed.add(num);
             }
 
-            compressed.add(num);
-        }
-
-        ArrayList<ArrayList<ArrayList<Integer>>> decompressed = new ArrayList<>();
-        for(int i = 0 ; i < compressed.size() ; i++){
-            decompressed.add(codebook.get(compressed.get(i)));
-        }
-
-        ArrayList<ArrayList<Integer>> pixels = new ArrayList<>();
-        int width_vector = width / vectorWidth;
-        int height_vector = height / vectorHeight;
-        for(int x = 0 ; x < height ; x++){
-            ArrayList<Integer> temp = new ArrayList<>();
-            for(int y = 0 ; y < width ; y++){
-                temp.add(decompressed.get((x / vectorHeight) * width_vector + (y / vectorWidth)).get(x % vectorHeight).get(y % vectorWidth));
+            ArrayList<ArrayList<ArrayList<Integer>>> decompressed = new ArrayList<>();
+            for (int i = 0; i < compressed.size(); i++) {
+                decompressed.add(codebook.get(compressed.get(i)));
             }
-            pixels.add(temp);
-        }
 
+            int width_vector = width / vectorWidth;
+            int height_vector = height / vectorHeight;
+            for (int x = 0; x < height; x++) {
+                for (int y = 0; y < width; y++) {
+                    int temp = decompressed.get((x / vectorHeight) * width_vector + (y / vectorWidth)).get(x % vectorHeight).get(y % vectorWidth);
+                    pixels[x][y][col] = temp;
+                }
+            }
+            nd = start;
+        }
         imageHandler.writeImage(pixels , outputPath);
 
     }
