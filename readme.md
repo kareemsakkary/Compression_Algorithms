@@ -1,5 +1,5 @@
 <h1>Compression app </h1>
-Swing desktop application to compress text files with one of following algorithms
+Swing desktop application to compress text files and images with one of following algorithms
 <ol>
   <li>LZ77</li>
   <li>LZW</li>
