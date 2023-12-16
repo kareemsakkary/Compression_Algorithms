@@ -135,7 +135,7 @@ public class VectorQuantization implements Algorithm {
         return codebook;
     }
     public ArrayList<ArrayList<ArrayList<Integer>>> getCodesBookHelper(ArrayList<ArrayList<ArrayList<Integer>>> vectors,ArrayList<ArrayList<ArrayList<Integer>>> codebook){
-        if(codebook.size() == codebookSize){
+        if(codebook.size() >= codebookSize){
             int[] groups = new int[vectors.size()];
             for(int i = 0 ; i<vectors.size();i++){
                 double  minError = Double.MAX_VALUE;
@@ -301,7 +301,6 @@ public class VectorQuantization implements Algorithm {
                 }
             }
             int bit_size = (int) (Math.log10(codebook.size()) / Math.log10(2));
-
             for (int i = 0; i < compressed.size(); i++) {
                 for (int j = 0; j < bit_size; j++) {
                     if ((compressed.get(i) & (1 << (bit_size - j - 1))) != 0) {
@@ -318,8 +317,6 @@ public class VectorQuantization implements Algorithm {
                 curr += (char) stringToByte(data.substring(i, Math.min(i + 8, data.length()))); // add the byte to the string
             }
         }
-
-
         Files.write(Paths.get(outputPath) , curr.getBytes());
 //        bufferedWriter.close();
     }
@@ -334,7 +331,7 @@ public class VectorQuantization implements Algorithm {
         int codebookSize = stringToShort(data.substring(8, 24));
         int vectorHeight = stringToShort(data.substring(24, 40));
         int vectorWidth = stringToShort(data.substring(40, 56));
-        int compressedSize = stringToShort(data.substring(56, 72));
+        int compressedSize = stringToShort(data.substring(56, 72)); // get the size of the compressed list, stores the index of the codebook vector to be used
         int height = stringToShort(data.substring(72, 88));
         int width = stringToShort(data.substring(88, 104));
         int start = 104;
@@ -344,7 +341,6 @@ public class VectorQuantization implements Algorithm {
         int nd = 0;
         for(int col = 0; col < 3; col++) {
             int ign = (int) stringToByte(data.substring(0, 8)); // get the number of bits to be ignored
-            // first line
             codebookSize = stringToShort(data.substring(8, 24));
             vectorHeight = stringToShort(data.substring(24, 40));
             vectorWidth = stringToShort(data.substring(40, 56));
@@ -384,7 +380,6 @@ public class VectorQuantization implements Algorithm {
             for (int i = 0; i < compressed.size(); i++) {
                 decompressed.add(codebook.get(compressed.get(i)));
             }
-
             int width_vector = width / vectorWidth;
             int height_vector = height / vectorHeight;
             for (int x = 0; x < height; x++) {
