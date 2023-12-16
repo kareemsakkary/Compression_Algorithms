@@ -29,6 +29,7 @@ public class Main extends JFrame {
         comboBox1.addItem("LZW");
         comboBox1.addItem("Huffman");
         comboBox1.addItem("Vector Quantization");
+        comboBox1.addItem("2D Predictive Compression");
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
@@ -43,7 +44,11 @@ public class Main extends JFrame {
                     algorithm = new Huffman();
                 }else if(comboBox1.getSelectedItem().equals("Vector Quantization")){
                     algorithm = new VectorQuantization();
-                } else{
+                }
+                else if(comboBox1.getSelectedItem().equals("2D Predictive Compression")){
+                    algorithm = new PredictiveCompression();
+                }
+                else{
                     algorithm = null;
                 }
             }
