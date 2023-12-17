@@ -22,24 +22,22 @@ public class PredictiveCompression implements Algorithm{
     @Override
     public void compress(String inputPath, String outputPath, HashMap<String, Integer> required) throws IOException {
         int start = -256;
-        int end = 255; // get the end value from the user
+        int end = 255;
         int step = required.get("step"); // get the step value from the user
         int[][] originalImage = ImageHandler2d.readImage(inputPath); // read the image
         int height = originalImage.length;
         int width = originalImage[0].length;
         HashMap<Integer , Double> deQuantizedValues = getDeQuantizedValues(start , end , step); // get the dequantized values
         int[][] quantizedDifference = predict(originalImage , deQuantizedValues, start , end , step); // get the quantized difference
-        // clear the file
         String content = "";
-        Files.write(Paths.get(outputPath) , "".getBytes());
         content+= start + " " + end + " " + step + "\n"; // write the start , end and step
         content+= height + " " + width + "\n"; // write the height and width
         for(int i = 0;i<height;i++){
-            content += originalImage[i][0] + " "; // write the first r
+            content += originalImage[i][0] + " "; // write the first column
         }
         content += "\n"; // write a new line
         for(int i = 0;i<width;i++){
-            content += originalImage[0][i] + " "; // write the first c
+            content += originalImage[0][i] + " "; // write the first row
         }
         // store the quantized difference
         content += "\n"; // write a new line
@@ -117,7 +115,7 @@ public class PredictiveCompression implements Algorithm{
         Scanner sc = new Scanner(file);
        String line1 = sc.nextLine();
        String[] line1Split = line1.split(" ");
-       int start = Integer.parseInt(line1Split[0]); // get the start
+        int start = Integer.parseInt(line1Split[0]); // get the start
         int end = Integer.parseInt(line1Split[1]); // get the end
         int step = Integer.parseInt(line1Split[2]); // get the step
         String line2 = sc.nextLine();
