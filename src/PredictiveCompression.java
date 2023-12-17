@@ -15,43 +15,43 @@ public class PredictiveCompression implements Algorithm{
     @Override
     public ArrayList<String> getRequiredData() {
         ArrayList<String> required = new ArrayList<>();
-        required.add("start");
-        required.add("end");
         required.add("step");
         return required;
     }
 
     @Override
     public void compress(String inputPath, String outputPath, HashMap<String, Integer> required) throws IOException {
-        int start = required.get("start"); // get the start value from the user
-        int end = required.get("end"); // get the end value from the user
+        int start = -256;
+        int end = 255; // get the end value from the user
         int step = required.get("step"); // get the step value from the user
-        HashMap<Integer , Integer> quantizedValues = getQuantizedValues(start , end , step); // get the quantized values
         int[][] originalImage = ImageHandler2d.readImage(inputPath); // read the image
         int height = originalImage.length;
         int width = originalImage[0].length;
         HashMap<Integer , Double> deQuantizedValues = getDeQuantizedValues(start , end , step); // get the dequantized values
-        int[][] quantizedDifference = predict(originalImage , quantizedValues , deQuantizedValues); // get the quantized difference
+        int[][] quantizedDifference = predict(originalImage , deQuantizedValues, start , end , step); // get the quantized difference
         // clear the file
+        String content = "";
         Files.write(Paths.get(outputPath) , "".getBytes());
-        Files.write(Paths.get(outputPath) , (start + " " + end + " " + step + "\n").getBytes() , StandardOpenOption.APPEND); // write the start , end and step values
-        Files.write(Paths.get(outputPath) , (height + " " + width + "\n").getBytes() , StandardOpenOption.APPEND); // write the width and height of the image
+        content+= start + " " + end + " " + step + "\n"; // write the start , end and step
+        content+= height + " " + width + "\n"; // write the height and width
         for(int i = 0;i<height;i++){
-            Files.write(Paths.get(outputPath) , (originalImage[i][0] + " ").getBytes() , StandardOpenOption.APPEND); // write the first column
+            content += originalImage[i][0] + " "; // write the first r
         }
-        Files.write(Paths.get(outputPath) , "\n".getBytes() , StandardOpenOption.APPEND); // write a new line
+        content += "\n"; // write a new line
         for(int i = 0;i<width;i++){
-            Files.write(Paths.get(outputPath) , (originalImage[0][i] + " ").getBytes() , StandardOpenOption.APPEND); // write the first r
+            content += originalImage[0][i] + " "; // write the first c
         }
         // store the quantized difference
-        Files.write(Paths.get(outputPath) , "\n".getBytes() , StandardOpenOption.APPEND); // write a new line
+        content += "\n"; // write a new line
         for(int i = 0;i<height;i++){
             for(int j = 0;j<width;j++){
-                Files.write(Paths.get(outputPath) , (quantizedDifference[i][j] + " ").getBytes() , StandardOpenOption.APPEND); // write the quantized difference
+                content += quantizedDifference[i][j] + " "; // write the quantized difference
             }
-            Files.write(Paths.get(outputPath) , "\n".getBytes() , StandardOpenOption.APPEND); // write a new line
+            content += "\n"; // write a new line
         }
+        Files.write(Paths.get(outputPath) , content.getBytes());
     }
+
     public int getPredictedValue(int a , int b  , int c){
         int predictedValue; // the predicted value
         if(b <= Math.min(a,c)){ // if b is less than or equal to the minimum of a and c
@@ -65,7 +65,7 @@ public class PredictiveCompression implements Algorithm{
         }
         return predictedValue; // return the predicted value
     }
-    public int[][] predict(int[][] originalImage , HashMap<Integer , Integer>quantized , HashMap<Integer , Double> deQuantized){
+    public int[][] predict(int[][] originalImage , HashMap<Integer , Double> deQuantized, int start , int end ,int step){
         int height = originalImage.length; // get the width of the image
         int width = originalImage[0].length; // get the height of the image
         int[][] decodedImage = new int[height][width]; // create a new image to store the decoded image
@@ -84,25 +84,12 @@ public class PredictiveCompression implements Algorithm{
             for(int j = 1;j<width;j++){
                 int predictedValue = getPredictedValue(decodedImage[i-1][j] , decodedImage[i][j-1] , decodedImage[i-1][j-1]); // get the predicted value
                 int temp = originalImage[i][j]; // get the current value
-                quantizedDifference[i][j] = quantized.get(temp - predictedValue); // get the quantized difference
+                int quantized = getQuantizedValue(start , end , step , temp - predictedValue); // get the quantized value
+                quantizedDifference[i][j] = quantized; // store the quantized value
                 decodedImage[i][j] = (int)(predictedValue + deQuantized.get(quantizedDifference[i][j])); // get the decoded image
             }
         }
         return quantizedDifference;
-    }
-    public HashMap<Integer , Integer>getQuantizedValues(int start , int end , int step){
-        HashMap<Integer , Integer> quantizedValues = new HashMap<>();
-        int index = 0;
-        while(start < end){
-            int nowStart = start;
-            int nowEnd = start + step;
-            for(int i = nowStart;i<nowEnd;i++){
-                quantizedValues.put(i , index);
-            }
-            index++;
-            start = nowEnd;
-        }
-        return quantizedValues;
     }
     public HashMap<Integer , Double> getDeQuantizedValues(int start , int end , int step){
         HashMap<Integer , Double> deQuantizedValues = new HashMap<>();
@@ -116,6 +103,9 @@ public class PredictiveCompression implements Algorithm{
             start = nowEnd;
         }
         return deQuantizedValues;
+    }
+    public int getQuantizedValue(int start , int end , int step , int val){
+        return (int)Math.ceil((double)(val - start) / step);
     }
 
     @Override
