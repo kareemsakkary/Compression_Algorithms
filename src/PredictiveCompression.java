@@ -85,6 +85,8 @@ public class PredictiveCompression implements Algorithm{
                 int quantized = getQuantizedValue(start , end , step , temp - predictedValue); // get the quantized value
                 quantizedDifference[i][j] = quantized; // store the quantized value
                 decodedImage[i][j] = (int)(predictedValue + deQuantized.get(quantizedDifference[i][j])); // get the decoded image
+                decodedImage[i][j] = Math.max(decodedImage[i][j] , 0); // make sure the value is not less than 0
+                decodedImage[i][j] = Math.min(decodedImage[i][j] , 255); // make sure the value is not greater than 255
             }
         }
         return quantizedDifference;
@@ -146,6 +148,8 @@ public class PredictiveCompression implements Algorithm{
             for(int j =1;j<width;j++){
                int predictedValue = getPredictedValue(decodedImage[i-1][j] , decodedImage[i][j-1] , decodedImage[i-1][j-1]); // get the predicted value
                decodedImage[i][j] = (int)(predictedValue + deQuantized.get(quantizedDifference[i][j])); // get the decoded image
+                decodedImage[i][j] = Math.max(decodedImage[i][j] , 0); // make sure the value is not less than 0
+                decodedImage[i][j] = Math.min(decodedImage[i][j] , 255); // make sure the value is not greater than 255
             }
         }
         ImageHandler2d.writeImage(decodedImage , outputPath);
